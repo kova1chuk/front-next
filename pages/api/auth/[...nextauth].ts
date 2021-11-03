@@ -1,27 +1,28 @@
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import GoogleProvider from "next-auth/providers/google";
 
 const options = {
   providers: [
-    Providers.Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  database: {
-    type: "postgres",
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    ssl: true,
-    extra: {
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    },
-  },
+  // database: {
+  //   type: "postgres",
+  //   host: process.env.DATABASE_HOST,
+  //   port: process.env.DATABASE_PORT,
+  //   username: process.env.DATABASE_USERNAME,
+  //   password: process.env.DATABASE_PASSWORD,
+  //   database: process.env.DATABASE_NAME,
+  //   ssl: true,
+  //   extra: {
+  //     ssl: {
+  //       rejectUnauthorized: false,
+  //     },
+  //   },
+  // },
+  database: `${process.env.NEXT_PUBLIC_DATABASE_URL}?synchronize=true`,
   session: {
     jwt: true,
   },
@@ -43,6 +44,24 @@ const options = {
       }
       return Promise.resolve(token);
     },
+    // async session(session: any, token: any, user: any) {
+    //   // Send properties to the client, like an access_token from a provider.
+    //   session.accessToken = token.accessToken;
+    //   return session;
+    // },
+    // async jwt(token: any, account: any) {
+    //   // Persist the OAuth access_token to the token right after signin
+    //   if (account) {
+    //     token.accessToken = account.access_token;
+    //   }
+    //   return token;
+    // },
+    // async session({ session, user, token }) {
+    //   return session;
+    // },
+    // async jwt({ token, user, account, profile, isNewUser }) {
+    //   return token;
+    // },
   },
 };
 
