@@ -1,1 +1,1 @@
-// TODO
+export { default as MediaGrid } from './MediaGrid';

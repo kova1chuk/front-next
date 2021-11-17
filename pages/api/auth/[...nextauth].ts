@@ -1,5 +1,5 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import NextAuth from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
 
 const options = {
   providers: [
@@ -27,16 +27,17 @@ const options = {
     jwt: true,
   },
   callbacks: {
-    session: async (session: any, user: any) => {
+    session: async ({ session, token, user }: any) => {
       session.jwt = user.jwt;
       session.id = user.id;
+
       return Promise.resolve(session);
     },
-    jwt: async (token: any, user: any, account: any) => {
+    jwt: async ({ token, user, account }: any) => {
       const isSignIn = user ? true : false;
       if (isSignIn) {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/${account.provider}/callback?access_token=${account?.accessToken}`
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/${account.provider}/callback?access_token=${account?.accessToken}`,
         );
         const data = await response.json();
         token.jwt = data.jwt;

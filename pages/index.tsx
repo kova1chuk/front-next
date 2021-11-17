@@ -1,21 +1,19 @@
-import { GetServerSideProps, NextPage } from "next";
-import { Session } from "next-auth";
-import { getSession, signIn, signOut } from "next-auth/react";
-import Head from "next/head";
-import Link from "next/link";
-import React from "react";
+import { GetServerSideProps, NextPage } from 'next';
+import { Session } from 'next-auth';
+import { getSession, signIn, signOut } from 'next-auth/react';
+import Head from 'next/head';
+import Link from 'next/link';
+import React from 'react';
 
-const IndexPage: NextPage<{ session: Promise<Session | null> }> = ({
-  session,
-}) => {
+const IndexPage: NextPage<{ session: Promise<Session | null> }> = ({ session }) => {
   const signInButtonNode = () => {
     if (!!session) return false;
 
     return (
       <div>
-        <Link href="/api/auth/signin">
+        <Link href="/api/auth/signin" passHref>
           <button
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault();
               signIn();
             }}
@@ -34,9 +32,9 @@ const IndexPage: NextPage<{ session: Promise<Session | null> }> = ({
 
     return (
       <div>
-        <Link href="/api/auth/signout">
+        <Link href="/api/auth/signout" passHref>
           <button
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault();
               signOut();
             }}

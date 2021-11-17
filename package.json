@@ -5,7 +5,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "husky": "husky install",
+    "lint-staged": "lint-staged --config .lintstagedrc.json",
+    "tsc": "tsc --pretty --noEmit",
+    "lint": "eslint -c .eslintrc --ext .ts,.tsx .",
+    "prettier": "prettier  -c .prettierrc --write"
   },
   "dependencies": {
     "@emotion/react": "^11.6.0",
@@ -20,7 +24,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hover-video-player": "^9.4.0",
-     "swr": "^1.0.1"
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "@emotion/types": "^0.7.0",
@@ -29,6 +33,7 @@
     "@types/react": "17.0.33",
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.2",
+    "lint-staged": "^12.0.2",
     "typescript": "4.4.4"
   }
 }
