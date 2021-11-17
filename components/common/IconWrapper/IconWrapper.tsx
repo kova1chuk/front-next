@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { Box } from '@mui/system';
 
 interface IProps {
   value: number;
-  children: React.Component;
+  children: ReactNode;
 }
 
 // TODO: add styled

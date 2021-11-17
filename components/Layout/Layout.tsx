@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { Header } from '../Header';
 import { Navigation } from '../Navigation';
 
 interface IProps {
-  children: React.Component;
+  children: ReactNode;
 }
 
 const Layout: React.FC<IProps> = props => {
