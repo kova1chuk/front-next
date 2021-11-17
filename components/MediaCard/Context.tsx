@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled, alpha } from '@mui/material/styles';
-// TODO
+
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -77,16 +77,16 @@ export default function CustomizedMenus() {
       >
         <MenuItem onClick={handleClose} disableRipple>
           <EditIcon />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <FileCopyIcon />
-          Duplicate
+          Go to user
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={handleClose} disableRipple>
+          <FileCopyIcon />
+          Copy video link
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
           <ArchiveIcon />
-          Archive
+          Download video
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
           <MoreHorizIcon />

@@ -2,35 +2,40 @@
 
 import React from 'react';
 
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import Skeleton from '@mui/material/Skeleton';
-import moment from 'moment';
 
 import MediaCardContent from './Content';
-import CustomizedMenus from './Context';
+import MediaHeader from './MediaHeader';
 // TODO
-function Media(props: {
-  loading?: boolean | undefined;
-  createTime: any;
-  authorMeta: any;
-  cover: any;
-  videoUrl: any;
-  text: any;
-  hashtags: any[];
+
+interface IProps {
+  isLoading: boolean;
+  createTime: number;
+  authorMeta: { id: string; nickName: string; avatar: string };
+  coverSrc: string;
+  videoSrc: string;
+  videoAlt: string;
+  videoHeight: number;
+  videoWidth: number;
+  text: string;
+  hashtags: { id: string; name: string }[];
   diggCount: number;
   shareCount: number;
   commentCount: number;
-}) {
+}
+
+const MediaCard: React.FC<IProps> = props => {
   const {
-    loading = false,
+    isLoading,
     createTime,
     authorMeta,
-    cover,
+    videoSrc,
+    videoAlt,
+    videoHeight,
+    videoWidth,
+    coverSrc,
     hashtags,
-    videoUrl,
     text,
     diggCount,
     shareCount,
@@ -38,39 +43,14 @@ function Media(props: {
   } = props;
 
   return (
-    <Card sx={{ width: 345, m: 2 }}>
-      <CardHeader
-        avatar={
-          loading ? (
-            <Skeleton animation="wave" variant="circular" width={40} height={40} />
-          ) : (
-            <Avatar alt="Ted talk" src={authorMeta.avatar} />
-          )
-        }
-        action={loading ? null : <CustomizedMenus />}
-        title={
-          loading ? (
-            <Skeleton
-              animation="wave"
-              height={10}
-              width="80%"
-              style={{ marginBottom: 6 }}
-            />
-          ) : (
-            authorMeta.nickName
-          )
-        }
-        subheader={
-          loading ? (
-            <Skeleton animation="wave" height={10} width="40%" />
-          ) : (
-            moment(
-              new Date(createTime),
-              // "YYYYMMDD"
-            ).fromNow()
-            // "Texd"
-          )
-        }
+    <Card sx={{ m: 2 }}>
+      <MediaHeader
+        isLoading={isLoading}
+        authorMeta={{
+          avatar: authorMeta.avatar,
+          nickName: authorMeta.nickName,
+        }}
+        createTime={createTime}
       />
       <Box
         sx={{
@@ -80,54 +60,22 @@ function Media(props: {
       >
         <Box p={1}>
           <MediaCardContent
-            loading={loading}
-            videoUrl={videoUrl}
-            cover={cover}
+            isLoading={isLoading}
+            videoSrc={videoSrc}
+            videoAlt={videoAlt}
+            coverSrc={coverSrc}
             text={text}
             hashtags={hashtags}
             diggCount={diggCount}
             shareCount={shareCount}
             commentCount={commentCount}
+            videoHeight={videoHeight}
+            videoWidth={videoWidth}
           />
         </Box>
-        {/* <Box p={1}>
-          <MediaCardActivityValues
-            diggCount={diggCount}
-            shareCount={shareCount}
-            commentCount={commentCount}
-          />
-        </Box> */}
       </Box>
     </Card>
   );
-}
+};
 
-export default function CustomCard({
-  isLoading,
-  createTime,
-  authorMeta,
-  cover,
-  videoUrl,
-  text,
-  hashtags,
-  diggCount,
-  shareCount,
-  commentCount,
-}: any) {
-  return (
-    <div>
-      <Media
-        loading={isLoading}
-        hashtags={hashtags}
-        createTime={createTime}
-        authorMeta={authorMeta}
-        cover={cover}
-        videoUrl={videoUrl}
-        text={text}
-        diggCount={diggCount}
-        shareCount={shareCount}
-        commentCount={commentCount}
-      />
-    </div>
-  );
-}
+export default MediaCard;

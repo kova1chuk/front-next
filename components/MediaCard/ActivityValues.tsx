@@ -1,46 +1,46 @@
-import React from "react";
+import React from 'react';
 
-import CommentIcon from "@mui/icons-material/Comment";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import Box from "@mui/material/Box";
+import {
+  Comment as CommentIcon,
+  Share as ShareIcon,
+  Favorite as FavoriteIcon,
+} from '@mui/icons-material';
+import { Box, styled } from '@mui/material';
 
-
-
-import { IconWrapper } from "../common/IconWrapper";
+import { IconWrapper } from '../common/IconWrapper';
 
 // TODO
+const Wrapper = styled(Box)`
+  display: 'flex';
+  flex-direction: 'column';
+  justify-content: 'center';
+  align-items: 'center';
+  padding: 0;
+  margin: 0;
+`;
 
 interface IProps {
+  isLoading: boolean;
   diggCount: number;
   shareCount: number;
   commentCount: number;
 }
 
-const MediaCardActivityValues: React.FC<IProps> = (props) => {
-  const { diggCount, shareCount, commentCount } = props;
+const MediaCardActivityValues: React.FC<IProps> = props => {
+  const { isLoading, diggCount, shareCount, commentCount } = props;
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        p: 0,
-        m: 0,
-      }}
-    >
-      <IconWrapper value={diggCount}>
+    <Wrapper>
+      <IconWrapper isLoading={isLoading} value={diggCount}>
         <FavoriteIcon />
       </IconWrapper>
-      <IconWrapper value={shareCount}>
+      <IconWrapper isLoading={isLoading} value={shareCount}>
         <ShareIcon />
       </IconWrapper>
-      <IconWrapper value={commentCount}>
+      <IconWrapper isLoading={isLoading} value={commentCount}>
         <CommentIcon />
       </IconWrapper>
-    </Box>
+    </Wrapper>
   );
 };
 

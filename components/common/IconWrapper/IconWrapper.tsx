@@ -1,8 +1,11 @@
 import React, { ReactNode } from 'react';
 
-import { Box } from '@mui/system';
+import { Box, Skeleton } from '@mui/material';
+
+import abbreviateNumber from '../../../lib/abbreviateNumber';
 
 interface IProps {
+  isLoading: boolean;
   value: number;
   children: ReactNode;
 }
@@ -10,7 +13,7 @@ interface IProps {
 // TODO: add styled
 
 const IconWrapper: React.FC<IProps> = props => {
-  const { children, value } = props;
+  const { isLoading, children, value } = props;
 
   return (
     <Box
@@ -25,9 +28,29 @@ const IconWrapper: React.FC<IProps> = props => {
       component="div"
     >
       {children}
-      <Box sx={{ color: 'blue' }} component="p">
-        {value}
-      </Box>
+      {isLoading ? (
+        <Skeleton
+          animation="wave"
+          height="0.8rem"
+          width="100%"
+          sx={{
+            marginTop: '0.2rem',
+          }}
+        />
+      ) : (
+        <Box
+          sx={{
+            color: 'rgba(0, 0, 0, 0.6)',
+            fontSize: '0.6rem',
+            marginTop: '0.2rem',
+            padding: 0,
+            height: 16,
+          }}
+          component="p"
+        >
+          {value < 1000 ? value : abbreviateNumber(value)}
+        </Box>
+      )}
     </Box>
   );
 };

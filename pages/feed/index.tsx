@@ -71,27 +71,9 @@ export function ChipsArray() {
 }
 
 const Feed = (props: any) => {
-  const FETCH_FEED_URL = 'https://tiktok33.p.rapidapi.com/trending/feed';
+  const FETCH_FEED_URL =
+    'https://tiktok33.p.rapidapi.com/trending/feed?limit=100';
   const { data, error } = useSWR(FETCH_FEED_URL, tiktokFetch);
-  //   const { data2, error2 } = useSWR("api/feed");
-
-  //   console.log(data, error);
-  //   console.log(data2, error2);
-
-  // const [isLoading, setLoading] = useState(error); //State for the loading indicator
-  // const startLoading = () => setLoading(true);
-  // const stopLoading = () => setLoading(false);
-
-  // useEffect(() => {
-  //   //After the component is mounted set router event handlers
-  //   Router.events.on('routeChangeStart', startLoading);
-  //   Router.events.on('routeChangeComplete', stopLoading);
-
-  //   return () => {
-  //     Router.events.off('routeChangeStart', startLoading);
-  //     Router.events.off('routeChangeComplete', stopLoading);
-  //   };
-  // }, []);
 
   const pagginationHandler = (page: number) => {
     const currentPath = props.router.pathname;
@@ -121,18 +103,20 @@ const Feed = (props: any) => {
           posts={
             data &&
             data.slice(
-              0 + (parseInt(props.router.query.page || 1) - 1) * 10,
-              0 + parseInt(props.router.query.page || 1) * 10,
+              0 + (parseInt(props.router.query.page || 1) - 1) * 30,
+              0 + parseInt(props.router.query.page || 1) * 30,
             )
           }
           isLoading={!data}
         />
         <Stack spacing={2}>
-          <Pagination
-            count={10}
-            page={parseInt(props.router.query.page || 1)}
-            onChange={(_, page) => pagginationHandler(page)}
-          />
+          {data && data.length > 30 && (
+            <Pagination
+              count={Math.ceil(data.length / 30)}
+              page={parseInt(props.router.query.page || 1)}
+              onChange={(_, page) => pagginationHandler(page)}
+            />
+          )}
         </Stack>
         <Box sx={{ m: 2 }} />
       </Grid>

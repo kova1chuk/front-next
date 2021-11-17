@@ -1,107 +1,85 @@
 import React from 'react';
 
-import { Box, CardContent, CircularProgress, Skeleton, Typography } from '@mui/material';
-import HoverVideoPlayer from 'react-hover-video-player';
+import { Box, styled } from '@mui/material';
 
 import MediaCardActivityValues from './ActivityValues';
+import Hashtags from './Hashtags';
+import PostText from './PostText';
+import Video from './Video';
 
 // TODO
+
+const VideoAndStatWrapper = styled(Box)`
+  display: flex;
+  align-items: end;
+`;
+
+const VideoWrapper = styled(props => <Box {...props} />)`
+  min-height: 100;
+  min-width: 100;
+`;
 interface IProps {
-  loading: boolean;
-  videoUrl: string;
-  cover: string;
+  isLoading: boolean;
+  videoSrc: string;
+  videoAlt: string;
+  coverSrc: string;
   text: string;
-  hashtags: any[];
+  hashtags: { id: string; name: string }[];
   diggCount: number;
   shareCount: number;
   commentCount: number;
+  videoHeight: number;
+  videoWidth: number;
 }
 
 const MediaCardContent: React.FC<IProps> = props => {
   const {
-    loading,
-    videoUrl,
+    isLoading,
+    videoSrc,
     text,
     hashtags,
-    cover,
+    coverSrc,
     diggCount,
     shareCount,
     commentCount,
+    videoAlt,
+    videoHeight,
+    videoWidth,
   } = props;
+
+  const renderVideoAndStat = () => (
+    <VideoAndStatWrapper>
+      <VideoWrapper
+        sx={{
+          height: videoHeight ? videoHeight : 400,
+          width: videoWidth ? videoWidth : 230,
+        }}
+      >
+        <Video
+          isLoading={isLoading}
+          coverSrc={coverSrc}
+          videoSrc={videoSrc}
+          alt={videoAlt}
+        />
+      </VideoWrapper>
+      <Box p={1} pb={0}>
+        <MediaCardActivityValues
+          isLoading={isLoading}
+          diggCount={diggCount}
+          shareCount={shareCount}
+          commentCount={commentCount}
+        />
+      </Box>
+    </VideoAndStatWrapper>
+  );
 
   return (
     <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'end',
-        }}
-      >
-        {loading ? (
-          <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
-        ) : (
-          <HoverVideoPlayer
-            videoSrc={videoUrl}
-            muted={false}
-            // eslint-disable-next-line @next/next/no-img-element
-            pausedOverlay={<img alt="" src={cover} />}
-            loadingOverlay={
-              <Box
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <CircularProgress />
-              </Box>
-            }
-          />
-        )}
-        <Box p={1} pb={0}>
-          <MediaCardActivityValues
-            diggCount={diggCount}
-            shareCount={shareCount}
-            commentCount={commentCount}
-          />
-        </Box>
+      {renderVideoAndStat()}
+      <Box sx={{ maxWidth: 250, mt: 2 }}>
+        <PostText isLoading={isLoading} text={text} />
+        <Hashtags isLoading={isLoading} hashtags={hashtags} />
       </Box>
-      <CardContent>
-        {loading ? (
-          <>
-            <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
-            <Skeleton animation="wave" height={10} width="80%" />
-          </>
-        ) : (
-          <Typography variant="body2" color="text.secondary" component="p">
-            {text}
-          </Typography>
-        )}
-      </CardContent>
-      <CardContent>
-        {loading ? (
-          <Skeleton animation="wave" height={10} width="40%" />
-        ) : (
-          hashtags.map(item => (
-            <Box
-              key={item.id}
-              component="div"
-              sx={{
-                typography: 'subtitle2',
-                display: 'inline-block',
-                // p: 1,
-                m: 0.2,
-                bgcolor: 'background.paper',
-                cursor: 'pointer',
-              }}
-            >
-              #{item.name}
-            </Box>
-          ))
-        )}
-      </CardContent>
     </Box>
   );
 };
