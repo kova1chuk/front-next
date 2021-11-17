@@ -1,63 +1,58 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react';
 
-import Router, { withRouter } from "next/router";
+import TagFacesIcon from '@mui/icons-material/TagFaces';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import router, { withRouter } from 'next/router';
+import useSWR from 'swr';
 
-import Box from "@mui/material/Box";
-
-import Stack from "@mui/material/Stack";
-import Pagination from "@mui/material/Pagination";
-import Grid from "@mui/material/Grid";
-
-import feed from "../../data/feed.json";
-
-import { styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
-import TagFacesIcon from "@mui/icons-material/TagFaces";
-import MediaGrid from "../../components/common/MediaGrid/MediaGrid";
-import useSWR from "swr";
-import tiktokFetch from "../../lib/api/tiktok/feed";
+import MediaGrid from '../../components/common/MediaGrid/MediaGrid';
+import feed from '../../data/feed.json';
+import tiktokFetch from '../../lib/api/tiktok/feed';
 
 interface ChipData {
   key: number;
   label: string;
 }
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 // TODO
 export function ChipsArray() {
   const [chipData, setChipData] = useState<readonly ChipData[]>([
-    { key: 0, label: "Feed" },
-    { key: 1, label: "#jQuery" },
-    { key: 2, label: "#Polymer" },
-    { key: 3, label: "React" },
-    { key: 4, label: "Vue.js" },
+    { key: 0, label: 'Feed' },
+    { key: 1, label: '#jQuery' },
+    { key: 2, label: '#Polymer' },
+    { key: 3, label: 'React' },
+    { key: 4, label: 'Vue.js' },
   ]);
 
   const handleDelete = (chipToDelete: ChipData) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key)
-    );
+    setChipData(chips => chips.filter(chip => chip.key !== chipToDelete.key));
   };
 
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexWrap: "wrap",
-        listStyle: "none",
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        listStyle: 'none',
         p: 0.5,
         mt: 5.5,
         mb: 2,
       }}
       component="ul"
     >
-      {chipData.map((data) => {
+      {chipData.map(data => {
         let icon;
 
-        if (data.label === "Feed") {
+        if (data.label === 'Feed') {
           icon = <TagFacesIcon />;
         }
 
@@ -66,7 +61,7 @@ export function ChipsArray() {
             <Chip
               icon={icon}
               label={data.label}
-              onDelete={data.label === "Feed" ? undefined : handleDelete(data)}
+              onDelete={data.label === 'Feed' ? undefined : handleDelete(data)}
             />
           </ListItem>
         );
@@ -76,27 +71,27 @@ export function ChipsArray() {
 }
 
 const Feed = (props: any) => {
-  const FETCH_FEED_URL = "https://tiktok33.p.rapidapi.com/trending/feed";
+  const FETCH_FEED_URL = 'https://tiktok33.p.rapidapi.com/trending/feed';
   const { data, error } = useSWR(FETCH_FEED_URL, tiktokFetch);
   //   const { data2, error2 } = useSWR("api/feed");
 
   //   console.log(data, error);
   //   console.log(data2, error2);
 
-  const [isLoading, setLoading] = useState(false); //State for the loading indicator
-  const startLoading = () => setLoading(true);
-  const stopLoading = () => setLoading(false);
+  // const [isLoading, setLoading] = useState(error); //State for the loading indicator
+  // const startLoading = () => setLoading(true);
+  // const stopLoading = () => setLoading(false);
 
-  useEffect(() => {
-    //After the component is mounted set router event handlers
-    Router.events.on("routeChangeStart", startLoading);
-    Router.events.on("routeChangeComplete", stopLoading);
+  // useEffect(() => {
+  //   //After the component is mounted set router event handlers
+  //   Router.events.on('routeChangeStart', startLoading);
+  //   Router.events.on('routeChangeComplete', stopLoading);
 
-    return () => {
-      Router.events.off("routeChangeStart", startLoading);
-      Router.events.off("routeChangeComplete", stopLoading);
-    };
-  }, []);
+  //   return () => {
+  //     Router.events.off('routeChangeStart', startLoading);
+  //     Router.events.off('routeChangeComplete', stopLoading);
+  //   };
+  // }, []);
 
   const pagginationHandler = (page: number) => {
     const currentPath = props.router.pathname;
@@ -109,6 +104,8 @@ const Feed = (props: any) => {
     });
   };
 
+  if (error) router.push('/404');
+
   return (
     <Box sx={{ pb: 7 }}>
       <Grid
@@ -117,7 +114,7 @@ const Feed = (props: any) => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: "100vh" }}
+        style={{ minHeight: '100vh' }}
       >
         <ChipsArray />
         <MediaGrid
@@ -125,7 +122,7 @@ const Feed = (props: any) => {
             data &&
             data.slice(
               0 + (parseInt(props.router.query.page || 1) - 1) * 10,
-              0 + parseInt(props.router.query.page || 1) * 10
+              0 + parseInt(props.router.query.page || 1) * 10,
             )
           }
           isLoading={!data}

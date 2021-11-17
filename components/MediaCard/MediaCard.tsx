@@ -1,20 +1,16 @@
 // import * as React from "react";
 
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Skeleton from "@mui/material/Skeleton";
-import Box from "@mui/material/Box";
-import moment from "moment";
-import React from "react";
-import MediaCardContent from "./Content";
-import MediaCardActivityValues from "./ActivityValues";
-import CustomizedMenus from "./Context";
+import React from 'react';
+
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import Skeleton from '@mui/material/Skeleton';
+import moment from 'moment';
+
+import MediaCardContent from './Content';
+import CustomizedMenus from './Context';
 // TODO
 function Media(props: {
   loading?: boolean | undefined;
@@ -46,12 +42,7 @@ function Media(props: {
       <CardHeader
         avatar={
           loading ? (
-            <Skeleton
-              animation="wave"
-              variant="circular"
-              width={40}
-              height={40}
-            />
+            <Skeleton animation="wave" variant="circular" width={40} height={40} />
           ) : (
             <Avatar alt="Ted talk" src={authorMeta.avatar} />
           )
@@ -74,7 +65,7 @@ function Media(props: {
             <Skeleton animation="wave" height={10} width="40%" />
           ) : (
             moment(
-              new Date(createTime)
+              new Date(createTime),
               // "YYYYMMDD"
             ).fromNow()
             // "Texd"
@@ -83,8 +74,8 @@ function Media(props: {
       />
       <Box
         sx={{
-          display: "flex",
-          alignItems: "end",
+          display: 'flex',
+          alignItems: 'end',
         }}
       >
         <Box p={1}>

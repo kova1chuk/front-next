@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR from 'swr';
 
 interface IFeedItem {
   id: string;
@@ -56,7 +56,7 @@ interface IFeedItem {
       name: string;
       title: string;
       cover: string;
-    }[]
+    }[],
   ];
   effectStickers: {
     id: string;
@@ -67,27 +67,23 @@ interface IFeedItem {
 // TODO
 
 export function useUser() {
-  const {
-    data: feed,
-    mutate: mutateFeed,
-    error,
-  } = useSWR<IFeedItem>("/api/feed");
+  const { data: feed, mutate: mutateFeed, error } = useSWR<IFeedItem>('/api/feed');
 
   const isLoading = !feed && !error;
 
   return { user: feed as IFeedItem, mutateFeed, isLoading };
 }
 
-interface HttpResponse<T> extends Response {
-  parsedBody?: T;
-}
+// interface HttpResponse<T> extends Response {
+//   parsedBody?: T;
+// }
 
 const tiktokFetch = (url: string) =>
   fetch(url, {
     headers: {
-      "x-rapidapi-host": "tiktok33.p.rapidapi.com",
-      "x-rapidapi-key": "c1257dc04cmshd888bbb072eb770p1f2b8ajsnbf16d4cd1d66",
+      'x-rapidapi-host': 'tiktok33.p.rapidapi.com',
+      'x-rapidapi-key': 'c1257dc04cmshd888bbb072eb770p1f2b8ajsnbf16d4cd1d66',
     },
-  }).then((res) => res.json());
+  }).then(res => res.json());
 
 export default tiktokFetch;

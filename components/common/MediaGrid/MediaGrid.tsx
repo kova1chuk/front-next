@@ -1,6 +1,7 @@
-import React from "react";
-import { MediaCard } from "../../MediaCard";
-import PostsWrapper from "./PostWrapper";
+import React from 'react';
+
+import { MediaCard } from '../../MediaCard';
+import PostsWrapper from './PostWrapper';
 
 // TODO: typing, refactoring
 
@@ -10,13 +11,13 @@ interface IProps {
   loadingCount?: number;
 }
 
-const MediaGrid: React.FC<IProps> = (props) => {
+const MediaGrid: React.FC<IProps> = props => {
   const { posts, isLoading, loadingCount } = props;
 
   return (
     <PostsWrapper>
       {posts
-        ? posts.map((item) => (
+        ? posts.map(item => (
             <MediaCard
               loading={isLoading}
               key={item.id}
@@ -35,7 +36,7 @@ const MediaGrid: React.FC<IProps> = (props) => {
               commentCount={item.commentCount}
             />
           ))
-        : Array.from(Array(6)).map((_, index) => (
+        : Array.from(Array(loadingCount)).map((_, index) => (
             <MediaCard key={index} isLoading={isLoading} />
           ))}
     </PostsWrapper>

@@ -1,13 +1,14 @@
+import React from 'react';
+
 import { GetServerSideProps, NextPage } from 'next';
 import { Session } from 'next-auth';
 import { getSession, signIn, signOut } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
-import React from 'react';
 
 const IndexPage: NextPage<{ session: Promise<Session | null> }> = ({ session }) => {
-  const signInButtonNode = () => {
-    if (!!session) return false;
+  const signInButtonNode = async () => {
+    if (await session) return false;
 
     return (
       <div>

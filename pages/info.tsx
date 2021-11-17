@@ -1,69 +1,66 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import Router, { withRouter } from "next/router";
+import ArchiveIcon from '@mui/icons-material/Archive';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import RestoreIcon from '@mui/icons-material/Restore';
+import TagFacesIcon from '@mui/icons-material/TagFaces';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
+import Pagination from '@mui/material/Pagination';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import Router, { withRouter } from 'next/router';
 
-import Box from "@mui/material/Box";
 // import CssBaseline from '@mui/material/CssBaseline';
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import Paper from "@mui/material/Paper";
-import List from "@mui/material/List";
-import Stack from "@mui/material/Stack";
-import Pagination from "@mui/material/Pagination";
-import Grid from "@mui/material/Grid";
+
 // import Avatar from '@mui/material/Avatar';
-import { MediaCard } from "../components/MediaCard";
+import { MediaCard } from '../components/MediaCard';
+import feed from '../data/feed.json';
 
-import feed from "../data/feed.json";
-
-import { styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
-import TagFacesIcon from "@mui/icons-material/TagFaces";
 // TODO
 interface ChipData {
   key: number;
   label: string;
 }
 
-const ListItem = styled("li")(({ theme }) => ({
+const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
 export function ChipsArray() {
   const [chipData, setChipData] = useState<readonly ChipData[]>([
-    { key: 0, label: "Feed" },
-    { key: 1, label: "#jQuery" },
-    { key: 2, label: "#Polymer" },
-    { key: 3, label: "React" },
-    { key: 4, label: "Vue.js" },
+    { key: 0, label: 'Feed' },
+    { key: 1, label: '#jQuery' },
+    { key: 2, label: '#Polymer' },
+    { key: 3, label: 'React' },
+    { key: 4, label: 'Vue.js' },
   ]);
 
   const handleDelete = (chipToDelete: ChipData) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key)
-    );
+    setChipData(chips => chips.filter(chip => chip.key !== chipToDelete.key));
   };
 
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexWrap: "wrap",
-        listStyle: "none",
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        listStyle: 'none',
         p: 0.5,
         mt: 5.5,
         mb: 2,
       }}
       component="ul"
     >
-      {chipData.map((data) => {
+      {chipData.map(data => {
         let icon;
 
-        if (data.label === "Feed") {
+        if (data.label === 'Feed') {
           icon = <TagFacesIcon />;
         }
 
@@ -72,7 +69,7 @@ export function ChipsArray() {
             <Chip
               icon={icon}
               label={data.label}
-              onDelete={data.label === "Feed" ? undefined : handleDelete(data)}
+              onDelete={data.label === 'Feed' ? undefined : handleDelete(data)}
             />
           </ListItem>
         );
@@ -88,12 +85,12 @@ const Feed = (props: any) => {
 
   useEffect(() => {
     //After the component is mounted set router event handlers
-    Router.events.on("routeChangeStart", startLoading);
-    Router.events.on("routeChangeComplete", stopLoading);
+    Router.events.on('routeChangeStart', startLoading);
+    Router.events.on('routeChangeComplete', stopLoading);
 
     return () => {
-      Router.events.off("routeChangeStart", startLoading);
-      Router.events.off("routeChangeComplete", stopLoading);
+      Router.events.off('routeChangeStart', startLoading);
+      Router.events.off('routeChangeComplete', stopLoading);
     };
   }, []);
 
@@ -116,7 +113,7 @@ const Feed = (props: any) => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: "100vh" }}
+        style={{ minHeight: '100vh' }}
       >
         <ChipsArray />
         <Grid
@@ -129,9 +126,9 @@ const Feed = (props: any) => {
           {feed
             .slice(
               0 + (parseInt(props.router.query.page || 1) - 1) * 10,
-              0 + parseInt(props.router.query.page || 1) * 10
+              0 + parseInt(props.router.query.page || 1) * 10,
             )
-            .map((item, index) => (
+            .map(item => (
               <Grid
                 key={item.id}
                 spacing={0}
@@ -167,10 +164,7 @@ const Feed = (props: any) => {
           />
         </Stack>
         <Box sx={{ m: 2 }} />
-        <Paper
-          sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-          elevation={3}
-        >
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
           <BottomNavigation
             showLabels
             //   value={value}

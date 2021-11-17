@@ -1,14 +1,10 @@
-import {
-  Box,
-  CardContent,
-  CardMedia,
-  CircularProgress,
-  Skeleton,
-  Typography,
-} from '@mui/material';
-import MediaCardActivityValues from './ActivityValues';
+import React from 'react';
+
+import { Box, CardContent, CircularProgress, Skeleton, Typography } from '@mui/material';
 import HoverVideoPlayer from 'react-hover-video-player';
-import Image from 'next/image';
+
+import MediaCardActivityValues from './ActivityValues';
+
 // TODO
 interface IProps {
   loading: boolean;
@@ -47,24 +43,8 @@ const MediaCardContent: React.FC<IProps> = props => {
           <HoverVideoPlayer
             videoSrc={videoUrl}
             muted={false}
-            pausedOverlay={
-              // <Image
-              //   alt=""
-              //   // src={cover}
-              //   src="/tiktok-logo.webp"
-              //   blurDataURL="/tiktok-logo.webp"
-              //   // placeholder="blur"
-              //   layout="fill"
-              // />
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                alt=""
-                src={cover}
-                // src="/tiktok-art.jpg"
-                // blurDataURL="/tiktok-logo.webp"
-                // placeholder="blur"
-              />
-            }
+            // eslint-disable-next-line @next/next/no-img-element
+            pausedOverlay={<img alt="" src={cover} />}
             loadingOverlay={
               <Box
                 sx={{

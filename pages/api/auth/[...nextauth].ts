@@ -27,7 +27,7 @@ const options = {
     jwt: true,
   },
   callbacks: {
-    session: async ({ session, token, user }: any) => {
+    session: async ({ session, user }: any) => {
       session.jwt = user.jwt;
       session.id = user.id;
 

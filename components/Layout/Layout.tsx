@@ -1,12 +1,13 @@
-import React from "react";
-import { Header } from "../Header";
-import { Navigation } from "../Navigation";
+import React from 'react';
+
+import { Header } from '../Header';
+import { Navigation } from '../Navigation';
 
 interface IProps {
-  children: JSX.Element;
+  children: React.Component;
 }
 
-const Layout: React.FC<IProps> = (props) => {
+const Layout: React.FC<IProps> = props => {
   const { children } = props;
 
   return (
