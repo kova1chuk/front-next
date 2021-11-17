@@ -63,7 +63,6 @@ const MediaCardContent: React.FC<IProps> = props => {
                 // src="/tiktok-art.jpg"
                 // blurDataURL="/tiktok-logo.webp"
                 // placeholder="blur"
-                objectFit="contain"
               />
             }
             loadingOverlay={
