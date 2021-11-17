@@ -48,16 +48,16 @@ const User = () => {
           </Box>
         </Grid>
         <Grid container spacing={4} justifyContent="center" mt={5}>
-          <IconWrapper value={user.stats.followerCount}>
+          <IconWrapper value={user.stats.followerCount} isLoading={false}>
             <PeopleIcon />
           </IconWrapper>
-          <IconWrapper value={user.stats.followingCount}>
+          <IconWrapper value={user.stats.followingCount} isLoading={false}>
             <VisibilityIcon />
           </IconWrapper>
-          <IconWrapper value={user.stats.heartCount}>
+          <IconWrapper value={user.stats.heartCount} isLoading={false}>
             <FavoriteIcon />
           </IconWrapper>
-          <IconWrapper value={user.stats.videoCount}>
+          <IconWrapper value={user.stats.videoCount} isLoading={false}>
             <PersonalVideoIcon />
           </IconWrapper>
         </Grid>

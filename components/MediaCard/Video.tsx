@@ -29,8 +29,8 @@ const Video: React.FC<IProps> = props => {
       videoSrc={videoSrc}
       muted={false}
       style={{ height: '100%', width: '100%' }}
-      // eslint-disable-next-line @next/next/no-img-element
       pausedOverlay={
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           alt={alt}
           src={coverSrc}
