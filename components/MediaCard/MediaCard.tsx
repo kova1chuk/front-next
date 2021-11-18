@@ -12,7 +12,7 @@ import MediaHeader from './MediaHeader';
 interface IProps {
   isLoading: boolean;
   createTime: number;
-  authorMeta: { id: string; nickName: string; avatar: string };
+  authorMeta: { id: string; nickName: string; avatar: string; name: string };
   coverSrc: string;
   videoSrc: string;
   videoAlt: string;
@@ -49,6 +49,7 @@ const MediaCard: React.FC<IProps> = props => {
         authorMeta={{
           avatar: authorMeta.avatar,
           nickName: authorMeta.nickName,
+          name: authorMeta.name,
         }}
         createTime={createTime}
       />

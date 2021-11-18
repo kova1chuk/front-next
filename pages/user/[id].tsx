@@ -5,12 +5,13 @@ import PeopleIcon from '@mui/icons-material/People';
 import PersonalVideoIcon from '@mui/icons-material/PersonalVideo';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Card, Typography, Grid, Avatar, Box } from '@mui/material';
+import moment from 'moment';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
 import { IconWrapper } from '../../components/common/IconWrapper';
 import { MediaGrid } from '../../components/common/MediaGrid';
-import user from '../../data/user.json';
+// import user from '../../data/user.json';
 import tiktokFetch from '../../lib/api/tiktok/feed';
 
 // TODO
@@ -18,15 +19,17 @@ import tiktokFetch from '../../lib/api/tiktok/feed';
 const User = () => {
   const router = useRouter();
 
+  const userUrl = `https://tiktok33.p.rapidapi.com/user/info/${
+    router.query.id as string
+  }`;
+  const { data: user, error: userError } = useSWR(userUrl, tiktokFetch);
+
   const url = `https://tiktok33.p.rapidapi.com/user/feed/${
     router.query.id as string
   }`;
-
-  console.log(url);
-
   const { data, error } = useSWR(url, tiktokFetch);
 
-  if (error) router.push('/404');
+  if (error && userError) router.push('/404');
 
   return (
     <Grid
@@ -36,43 +39,49 @@ const User = () => {
       alignItems="center"
       style={{ minHeight: '100vh' }}
     >
-      <Card>
-        <Grid container spacing={0} alignItems="space-around">
-          <Avatar
-            alt="Ted talk"
-            src={user.user.avatarMedium}
-            sx={{ width: '30%', height: 'auto', m: 5 }}
-          />
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
+      {user && (
+        <Card>
+          <Grid container spacing={0} alignItems="space-around">
+            <Avatar
+              alt="Ted talk"
+              src={user.user.avatarMedium}
+              sx={{ width: '30%', height: 'auto', m: 5 }}
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
 
-              m: 5,
-            }}
-          >
-            <Typography>{user.user.nickname}</Typography>
-            <Typography>@{user.user.uniqueId}</Typography>
-            <Typography>{user.user.signature}</Typography>
-            <Typography>bio link: {user.user.bioLink.link}</Typography>
-            <Typography>{user.user.createTime}</Typography>
-          </Box>
-        </Grid>
-        <Grid container spacing={4} justifyContent="center" mt={5}>
-          <IconWrapper value={user.stats.followerCount} isLoading={false}>
-            <PeopleIcon />
-          </IconWrapper>
-          <IconWrapper value={user.stats.followingCount} isLoading={false}>
-            <VisibilityIcon />
-          </IconWrapper>
-          <IconWrapper value={user.stats.heartCount} isLoading={false}>
-            <FavoriteIcon />
-          </IconWrapper>
-          <IconWrapper value={user.stats.videoCount} isLoading={false}>
-            <PersonalVideoIcon />
-          </IconWrapper>
-        </Grid>
-      </Card>
+                m: 5,
+              }}
+            >
+              <Typography>{user.user.nickname}</Typography>
+              <Typography>@{user.user.uniqueId}</Typography>
+              <Typography>{user.user.signature}</Typography>
+              {user.user.bioLink && (
+                <Typography>bio link: {user.user.bioLink.link}</Typography>
+              )}
+              <Typography>
+                {moment.unix(user.user.createTime).fromNow()}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid container spacing={4} justifyContent="center" mt={5}>
+            <IconWrapper value={user.stats.followerCount} isLoading={false}>
+              <PeopleIcon />
+            </IconWrapper>
+            <IconWrapper value={user.stats.followingCount} isLoading={false}>
+              <VisibilityIcon />
+            </IconWrapper>
+            <IconWrapper value={user.stats.heartCount} isLoading={false}>
+              <FavoriteIcon />
+            </IconWrapper>
+            <IconWrapper value={user.stats.videoCount} isLoading={false}>
+              <PersonalVideoIcon />
+            </IconWrapper>
+          </Grid>
+        </Card>
+      )}
       <Box sx={{ pt: 2, pb: 7 }}>
         <MediaGrid posts={data && data} isLoading={!data} loadingCount={6} />
       </Box>

@@ -12,6 +12,8 @@ interface IProps {
 const MediaGrid: React.FC<IProps> = props => {
   const { posts, isLoading, loadingCount } = props;
 
+  console.log(posts);
+
   const renderPostsSceleton = () =>
     Array.from(Array(loadingCount)).map((_, index) => (
       <MediaCard
@@ -22,6 +24,7 @@ const MediaGrid: React.FC<IProps> = props => {
           id: '',
           nickName: '',
           avatar: '',
+          name: '',
         }}
         coverSrc={''}
         videoSrc={''}
@@ -45,6 +48,7 @@ const MediaGrid: React.FC<IProps> = props => {
           id: item.authorMeta.id,
           nickName: item.authorMeta.nickName,
           avatar: item.authorMeta.avatar,
+          name: item.authorMeta.name,
         }}
         hashtags={item.hashtags}
         coverSrc={item.covers.origin}
