@@ -1,21 +1,31 @@
 import React from 'react';
 
 import { Box, Skeleton } from '@mui/material';
+import { useRouter } from 'next/router';
+
+import { ITag } from '../../interfaces';
 
 interface IProps {
   isLoading: boolean;
-  hashtags: { id: string; name: string }[];
+  hashtags: ITag[];
 }
 
 const Hashtags: React.FC<IProps> = props => {
   const { isLoading, hashtags } = props;
+
+  const router = useRouter();
+
+  const onClick = (tag: ITag) => {
+    // setSelectedTag(tag);
+    router.push({ pathname: router.pathname, query: { tag: tag.name } });
+  };
 
   const renderSceleton = () => <Skeleton animation="wave" height={10} />;
 
   const renderHashtags = () =>
     hashtags && hashtags.length ? (
       <>
-        {hashtags.map(item => (
+        {hashtags.map((item: ITag) => (
           <Box
             sx={{
               fontSize: '0.8rem',
@@ -32,6 +42,7 @@ const Hashtags: React.FC<IProps> = props => {
             }}
             component="p"
             key={item.id}
+            onClick={() => onClick(item)}
           >
             #{item.name}
           </Box>
