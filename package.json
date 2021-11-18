@@ -5,20 +5,40 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "husky": "husky install",
+    "lint-staged": "lint-staged --config .lintstagedrc.json",
+    "tsc": "tsc --pretty --noEmit",
+    "lint": "eslint -c .eslintrc --ext .ts,.tsx .",
+    "lint:fix": "eslint -c .eslintrc --fix --ext .ts,.tsx .",
+    "prettier": "prettier  -c .prettierrc --write"
   },
   "dependencies": {
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.1.0",
+    "@mui/material": "^5.1.0",
+    "moment": "^2.29.1",
     "next": "12.0.2",
     "next-auth": "^4.0.0-beta.6",
+    "next-i18next": "^9.1.0",
     "pg": "^8.7.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-hover-video-player": "^9.4.0",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
+    "@emotion/types": "^0.7.0",
+    "@mui/types": "^7.1.0",
     "@types/node": "16.11.6",
     "@types/react": "17.0.33",
+    "@typescript-eslint/parser": "^4.33.0",
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.2",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "lint-staged": "^12.0.2",
+    "prettier": "^2.4.1",
     "typescript": "4.4.4"
   }
 }
