@@ -45,6 +45,7 @@ const MediaHeader: React.FC<IProps> = props => {
       action={isLoading ? null : <CustomizedMenus />}
       title={isLoading ? renderTitleSceleton() : authorMeta.nickName}
       subheader={isLoading ? renderSubheaderSceleton() : renderSubheader()}
+      sx={{ cursor: 'pointer' }}
     />
   );
 };

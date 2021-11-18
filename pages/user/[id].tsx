@@ -11,10 +11,7 @@ import useSWR from 'swr';
 
 import { IconWrapper } from '../../components/common/IconWrapper';
 import { MediaGrid } from '../../components/common/MediaGrid';
-// import user from '../../data/user.json';
 import tiktokFetch from '../../lib/api/tiktok/feed';
-
-// TODO
 
 const User = () => {
   const router = useRouter();

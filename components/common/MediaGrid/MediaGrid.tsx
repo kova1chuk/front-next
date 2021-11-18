@@ -12,8 +12,6 @@ interface IProps {
 const MediaGrid: React.FC<IProps> = props => {
   const { posts, isLoading, loadingCount } = props;
 
-  console.log(posts);
-
   const renderPostsSceleton = () =>
     Array.from(Array(loadingCount)).map((_, index) => (
       <MediaCard
