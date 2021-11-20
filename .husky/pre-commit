@@ -1,0 +1,8 @@
+Executable File  6 lines (5 sloc)  57 Bytes
+   
+#!/bin/sh
+
+npm tsc
+npm lint
+npm lint-staged
+git add .

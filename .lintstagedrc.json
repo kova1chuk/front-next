@@ -1,0 +1,3 @@
+{
+    "src/**/*.{js,jsx,scss,css,json}": "npm prettier"
+  }

@@ -1,15 +1,38 @@
-import type { AppProps } from "next/app";
+import React from 'react';
 
-import "../styles/globals.css";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { SessionProvider } from 'next-auth/react';
+import { appWithTranslation } from 'next-i18next';
+import type { AppProps } from 'next/app';
 
-import { SessionProvider } from "next-auth/react";
+import { Layout } from '../components/Layout';
 
+import '../styles/globals.css';
+
+// TODO
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
+
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <ThemeProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
     </SessionProvider>
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);
